@@ -2,19 +2,29 @@ alphabet=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
           'q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f',
           'g','h','i','j','k','l','m','n','o','p',
           'q','r','s','t','u','v','w','x','y','z']
-direction = input("Type 'E' to encrypt or type 'D' to decrypt:\n")
-text=input("Type your message:\n").lower()
-shift= int(input("Type the shift number:\n"))
 
 def ceaser(start_text, shift_amount, cipher_direction):
     end_text = ""
     if cipher_direction=="D":
         shift_amount *=-1
-    for letter in start_text:
-        position = alphabet.index(letter)
-        new_position = position + shift_amount
-        new_letter = alphabet[new_position]
-        end_text += new_letter
+    for char in start_text:
+        if char in alphabet:
+            position = alphabet.index(char)
+            new_position = position + shift_amount
+            new_letter = alphabet[new_position]
+            end_text += new_letter
+        else:
+            end_text +=char
     print(f"Here's the {direction}d result: {end_text}")
+should_end = False
+while not should_end:
+    direction = input("Type 'E' to encrypt or type 'D' to decrypt:\n")
+    text=input("Type your message:\n").lower()
+    shift= int(input("Type the shift number:\n"))
     
-ceaser(start_text=text, shift_amount=shift, cipher_direction=direction)
+    shift = shift % 26
+    ceaser(start_text=text, shift_amount=shift, cipher_direction=direction)
+    restart = input("Type 'yes' if you want to continue, or type 'no' :\n")
+    if restart=="no":
+        should_end=True
+        print("Good Bye!")
